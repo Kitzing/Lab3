@@ -341,7 +341,7 @@ public class ReversiModel implements GameModel {
 
 	@Override
 	public Dimension getGameboardSize() {
-		return Constants.getGameSize();
+		return new Dimension(width, height);
 	}
 
 	/**
