@@ -1,16 +1,6 @@
 import java.awt.Dimension;
 
-public class GameUtils implements IGameModel {
-
-
-    /**
-     * Create a new game model. As GameModel is an abstract class, this is only
-     * intended for subclasses.
-     */
-    protected GameUtils() {
-        this.gameboardState =
-                new GameTile[this.gameboardSize.width][this.gameboardSize.height];
-    }
+public class GameUtils {
 
     /**
      * Set the tile on a specified position in the gameboard.
@@ -20,8 +10,8 @@ public class GameUtils implements IGameModel {
      * @param tile
      *            The type of tile to paint in specified position
      */
-    protected void setGameboardState(final Position pos, final GameTile tile) {
-        setGameboardState(pos.getX(), pos.getY(), tile);
+    protected static void setGameboardState(GameTile[][] gameboardState, final Position pos, final GameTile tile) {
+        setGameboardState(gameboardState, pos.getX(), pos.getY(), tile);
     }
 
     /**
@@ -34,47 +24,10 @@ public class GameUtils implements IGameModel {
      * @param tile
      *            The type of tile to paint in specified position
      */
-    protected void setGameboardState(final int x, final int y,
+    protected static void setGameboardState(GameTile[][] gameboardState, final int x, final int y,
                                      final GameTile tile) {
-        this.gameboardState[x][y] = tile;
+        gameboardState[x][y] = tile;
     }
-
-    /**
-     * Returns the GameTile in logical position (x,y) of the gameboard.
-     *
-     * @param pos
-     *            The position in the gameboard matrix.
-     */
-    public GameTile getGameboardState(final Position pos) {
-        return getGameboardState(pos.getX(), pos.getY());
-    }
-
-    /**
-     * Returns the GameTile in logical position (x,y) of the gameboard.
-     *
-     * @param x
-     *            Coordinate in the gameboard matrix.
-     * @param y
-     *            Coordinate in the gameboard matrix.
-     */
-    public GameTile getGameboardState(final int x, final int y) {
-        return this.gameboardState[x][y];
-    }
-
-    /**
-     * Returns the size of the gameboard.
-     */
-    public Dimension getGameboardSize() {
-        return this.gameboardSize;
-    }
-
-    /**
-     * This method is called repeatedly so that the game can update it's state.
-     *
-     * @param lastKey
-     *            The most recent keystroke.
-     */
-    public abstract void gameUpdate(int lastKey) throws GameOverException;
 
 
 }
