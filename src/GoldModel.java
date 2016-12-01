@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class GoldModel implements GameModel {
 	/** The size of the state matrix. */
 	private final Dimension gameboardSize = Constants.getGameSize();
 
+	private PropertyChangeSupport observer;
 
 	public enum Directions {
 		EAST(1, 0),
@@ -94,6 +97,7 @@ public class GoldModel implements GameModel {
 	 * Create a new model for the gold game.
 	 */
 	public GoldModel() {
+		this.observer = new PropertyChangeSupport(this);
 		Dimension size = getGameboardSize();
 		gameboardState = new GameTile[this.gameboardSize.width][this.gameboardSize.height];
 
@@ -173,6 +177,18 @@ public class GoldModel implements GameModel {
 		return new Position(
 				this.collectorPos.getX() + this.direction.getXDelta(),
 				this.collectorPos.getY() + this.direction.getYDelta());
+	}
+
+	@Override
+	public void addObserver(PropertyChangeListener observer) {
+		this.observer.addPropertyChangeListener(observer);
+
+	}
+
+	@Override
+	public void removeObserver(PropertyChangeListener observer) {
+		this.observer.removePropertyChangeListener(observer);
+
 	}
 
 	@Override
