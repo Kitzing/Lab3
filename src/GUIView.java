@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * This panel is meant to be the base of a window or applet. It will add a new
  * GameView with a corresponding GameController to itself. It will also provide
  * a gui for choosing a new game. The list of games will be aquired from
- * a GameFactory.
+ * a ReversiFactory.
  */
 public class GUIView extends JPanel {
 	/** The "Start Game" button */
@@ -44,7 +44,7 @@ public class GUIView extends JPanel {
 		// Create a new GameController connected to the GameView
 		this.gameController = new GameController(this.gameView);
 
-		// Create a new GameFactory
+		// Create a new ReversiFactory
 		this.gameFactory = factory;
 
 		// Set the background on the GameView
