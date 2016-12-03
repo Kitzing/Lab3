@@ -322,31 +322,49 @@ public class ReversiModel implements GameModel {
 	@Override
 	public GameTile getGameboardState(Position pos) {
 		PieceColor color = board[pos.getX()][pos.getY()];
+		if(pos.equals(cursorPos)) {
+			switch (color) {
 
-		switch (color){
-			case BLACK:
-				return blackTile;
-			case WHITE:
-				return whiteTile;
-			case EMPTY:
-				return blankTile;
+				case BLACK:
+					return new CompositeTile(blackGridTile, cursorRedTile);
+
+				case WHITE:
+					return new CompositeTile(whiteGridTile, cursorRedTile);
+
+				case EMPTY:
+					if(canTurn(turn, pos)) {
+						if(turn == Turn.BLACK) {
+							//return new CompositeTile(blankTile, cursorBlackTile);
+							return cursorBlackTile;
+						} else {
+							//return new CompositeTile(blankTile, cursorWhiteTile);
+							return cursorWhiteTile;
+						}
+					} else {
+						//return new CompositeTile(blankTile, cursorRedTile);
+						return cursorRedTile;
+					}
+
+				default:
+					return null;
+			}
+		} else {
+			switch (color) {
+				case BLACK:
+					return blackGridTile;
+				case WHITE:
+					return whiteGridTile;
+				case EMPTY:
+					return blankTile;
+				default:
+					return null;
+			}
 		}
-		return null;
 	}
 
 	@Override
 	public GameTile getGameboardState(int x, int y) {
-		PieceColor color = board[x][y];
-
-		switch (color){
-			case BLACK:
-				return blackTile;
-			case WHITE:
-				return whiteTile;
-			case EMPTY:
-				return blankTile;
-		}
-		return null;
+		return getGameboardState(new Position(x, y));
 	}
 
 	@Override
