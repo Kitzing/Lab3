@@ -26,6 +26,8 @@ public class GoldModel implements GameModel {
 
 	private PropertyChangeSupport observer;
 
+	private int updateSpeed;
+
 	public enum Directions {
 		EAST(1, 0),
 		WEST(-1, 0),
@@ -97,6 +99,7 @@ public class GoldModel implements GameModel {
 	 * Create a new model for the gold game.
 	 */
 	public GoldModel() {
+		this.updateSpeed = 0;
 		this.observer = new PropertyChangeSupport(this);
 		Dimension size = getGameboardSize();
 		gameboardState = new GameTile[this.gameboardSize.width][this.gameboardSize.height];
@@ -248,6 +251,11 @@ public class GoldModel implements GameModel {
 
 		view.repaint();
 
+	}
+
+	@Override
+	public int getUpdateSpeed() {
+		return updateSpeed;
 	}
 
 	/**

@@ -14,7 +14,7 @@ import java.beans.PropertyChangeSupport;
 public class ReversiModel implements GameModel {
 
 	private PropertyChangeSupport observer;
-
+	private int updateSpeed;
 
 	public enum Direction {
 			EAST(1, 0),
@@ -90,6 +90,7 @@ public class ReversiModel implements GameModel {
 	private boolean gameOver;
 
 	public ReversiModel() {
+		this.updateSpeed = 0;
 		this.observer = new PropertyChangeSupport(this);
 
 		this.width = Constants.getGameSize().width;
@@ -307,6 +308,10 @@ public class ReversiModel implements GameModel {
 					this.cursorPos.getY() + dir.getYDelta());
 	}
 
+	public int getUpdateSpeed() {
+		return updateSpeed;
+	}
+
 	@Override
 	public void addObserver(PropertyChangeListener observer) {
 		this.observer.addPropertyChangeListener(observer);
@@ -316,7 +321,6 @@ public class ReversiModel implements GameModel {
 	@Override
 	public void removeObserver(PropertyChangeListener observer) {
 		this.observer.removePropertyChangeListener(observer);
-
 	}
 
 	@Override
@@ -394,6 +398,7 @@ public class ReversiModel implements GameModel {
 			nextCursorPos = new Position(nextX, nextY);
 			this.cursorPos = nextCursorPos;
 			view.repaint();
+
 		} else {
 			throw new GameOverException(this.blackScore - this.whiteScore);
 		}

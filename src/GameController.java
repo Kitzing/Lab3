@@ -68,7 +68,16 @@ public class GameController implements Runnable {
 	 * Add a key press to the end of the queue
 	 */
 	private synchronized void enqueueKeyPress(final int key) {
-		this.keypresses.add(Integer.valueOf(key));
+		if(this.gameModel.getUpdateSpeed() > 0) {
+			try {
+				gameModel.gameUpdate(key, view);
+			} catch (GameOverException e) {
+				System.out.println("Game over: " + e.getScore());
+			}
+		} else {
+			this.keypresses.add(Integer.valueOf(key));
+
+		}
 	}
 
 	/**

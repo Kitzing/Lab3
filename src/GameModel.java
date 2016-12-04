@@ -34,4 +34,6 @@ public interface GameModel extends IObservable{
 
     public void gameUpdate(int lastKey, GameView view) throws GameOverException;
 
+    public int getUpdateSpeed();
+
 }
