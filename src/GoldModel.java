@@ -214,7 +214,7 @@ public class GoldModel implements GameModel {
 	 *            The most recent keystroke.
 	 */
 	@Override
-	public void gameUpdate(final int lastKey) throws GameOverException {
+	public void gameUpdate(final int lastKey, GameView view) throws GameOverException {
 		updateDirection(lastKey);
 
 		// Erase the previous position.
@@ -245,6 +245,8 @@ public class GoldModel implements GameModel {
 
 		// Add a new coin (simulating moving one coin)
 		addCoin();
+
+		view.repaint();
 
 	}
 

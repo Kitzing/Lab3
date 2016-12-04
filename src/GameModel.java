@@ -32,6 +32,6 @@ public interface GameModel extends IObservable{
      */
     public Dimension getGameboardSize();
 
-    public void gameUpdate(int lastKey) throws GameOverException;
+    public void gameUpdate(int lastKey, GameView view) throws GameOverException;
 
 }
