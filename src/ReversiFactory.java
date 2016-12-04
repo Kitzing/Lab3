@@ -3,6 +3,8 @@
  */
 public class ReversiFactory implements IGameFactory {
 
+	private ReversiScoreView scoreView;
+
 	/**
 	 * Returns an array with names of games this factory can create. Used by GUI
 	 * list availible games.
@@ -26,7 +28,10 @@ public class ReversiFactory implements IGameFactory {
 			return new GoldModel();
 		}
 		if (gameName.equals("Reversi")) {
-			return new ReversiModel();
+			GameModel reversi = new ReversiModel();
+			scoreView = new ReversiScoreView((ReversiModel) reversi);
+			reversi.addObserver(scoreView);
+			return reversi;
 		}
 
 		throw new IllegalArgumentException("No such game: " + gameName);
