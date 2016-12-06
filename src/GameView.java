@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 import javax.swing.JComponent;
 
@@ -28,6 +29,8 @@ public class GameView extends JComponent implements PropertyChangeListener {
 
 	/** Image representing the offscreen graphics */
 	private Image offscreenImage;
+
+	private PropertyChangeListener observer;
 
 	/**
 	 * Creates a view where each GameObject has side length 40 pixels..
@@ -56,6 +59,8 @@ public class GameView extends JComponent implements PropertyChangeListener {
 	 */
 	public void setModel(final GameModel model) {
 		this.model = model;
+		if(model != null) model.addObserver(this);
+
 		repaint();
 	}
 

@@ -185,13 +185,15 @@ public class GoldModel implements GameModel {
 	@Override
 	public void addObserver(PropertyChangeListener observer) {
 		this.observer.addPropertyChangeListener(observer);
-
 	}
 
 	@Override
 	public void removeObserver(PropertyChangeListener observer) {
 		this.observer.removePropertyChangeListener(observer);
 
+	}
+	public void notifyObserver(){
+		observer.firePropertyChange("game", false, true);
 	}
 
 	@Override
@@ -217,7 +219,7 @@ public class GoldModel implements GameModel {
 	 *            The most recent keystroke.
 	 */
 	@Override
-	public void gameUpdate(final int lastKey, GameView view) throws GameOverException {
+	public void gameUpdate(final int lastKey) throws GameOverException {
 		updateDirection(lastKey);
 
 		// Erase the previous position.
@@ -249,7 +251,7 @@ public class GoldModel implements GameModel {
 		// Add a new coin (simulating moving one coin)
 		addCoin();
 
-		view.repaint();
+		notifyObserver();
 
 	}
 

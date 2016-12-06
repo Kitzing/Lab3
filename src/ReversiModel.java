@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -171,6 +172,7 @@ public class ReversiModel implements GameModel {
 			}
 			if (canTurn(this.turn, this.cursorPos)) {
 				turnOver(this.turn, this.cursorPos);
+				Turn thisTurn = this.turn;
 				this.board[this.cursorPos.getX()][this.cursorPos.getY()] =
 						(this.turn == Turn.BLACK
 								? PieceColor.BLACK
@@ -178,6 +180,7 @@ public class ReversiModel implements GameModel {
 				System.out.println("Bong! White: " + this.whiteScore
 						+ "\tBlack: " + this.blackScore);
 				this.turn = Turn.nextTurn(this.turn);
+				notifyObserver();
 			}
 			if (!canTurn(this.turn)) {
 				if (!canTurn(Turn.nextTurn(this.turn))) {
@@ -188,7 +191,6 @@ public class ReversiModel implements GameModel {
 				this.turn = Turn.nextTurn(this.turn);
 			}
 		}
-
 	}
 
 	private void turnOver(final Turn turn, final Position cursorPos) {
@@ -318,6 +320,10 @@ public class ReversiModel implements GameModel {
 
 	}
 
+	public void notifyObserver(){
+		observer.firePropertyChange("game", false, true);
+	}
+
 	@Override
 	public void removeObserver(PropertyChangeListener observer) {
 		this.observer.removePropertyChangeListener(observer);
@@ -384,7 +390,7 @@ public class ReversiModel implements GameModel {
 	 *            The most recent keystroke.
 	 */
 	@Override
-	public void gameUpdate(final int lastKey, GameView view) throws GameOverException {
+	public void gameUpdate(final int lastKey) throws GameOverException {
 		if (!this.gameOver) {
 			Position nextCursorPos = getNextCursorPos(updateDirection(lastKey));
 			Dimension boardSize = getGameboardSize();
@@ -397,7 +403,7 @@ public class ReversiModel implements GameModel {
 							Math.min(nextCursorPos.getY(), boardSize.height - 1));
 			nextCursorPos = new Position(nextX, nextY);
 			this.cursorPos = nextCursorPos;
-			view.repaint();
+			notifyObserver();
 
 		} else {
 			throw new GameOverException(this.blackScore - this.whiteScore);

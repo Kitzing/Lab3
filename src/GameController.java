@@ -70,7 +70,7 @@ public class GameController implements Runnable {
 	private synchronized void enqueueKeyPress(final int key) {
 		if(this.gameModel.getUpdateSpeed() > 0) {
 			try {
-				gameModel.gameUpdate(key, view);
+				gameModel.gameUpdate(key);
 			} catch (GameOverException e) {
 				System.out.println("Game over: " + e.getScore());
 			}
@@ -150,10 +150,7 @@ public class GameController implements Runnable {
 			try {
 				// Tell model to update, send next key press.
 				// or 0 if no new keypress since last update.
-				this.gameModel.gameUpdate(nextKeyPress(), this.view);
-
-				// Model??
-				//this.view.repaint();
+				this.gameModel.gameUpdate(nextKeyPress());
 
 				Thread.sleep(this.updateInterval);
 			} catch (GameOverException e) {

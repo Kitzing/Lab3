@@ -29,7 +29,7 @@ public class ReversiFactory implements IGameFactory {
 		}
 		if (gameName.equals("Reversi")) {
 			GameModel reversi = new ReversiModel();
-			scoreView = new ReversiScoreView((ReversiModel) reversi);
+			scoreView = new ReversiScoreView();
 			reversi.addObserver(scoreView);
 			return reversi;
 		}
