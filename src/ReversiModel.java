@@ -172,13 +172,12 @@ public class ReversiModel implements GameModel {
 			}
 			if (canTurn(this.turn, this.cursorPos)) {
 				turnOver(this.turn, this.cursorPos);
-				Turn thisTurn = this.turn;
 				this.board[this.cursorPos.getX()][this.cursorPos.getY()] =
 						(this.turn == Turn.BLACK
 								? PieceColor.BLACK
 								: PieceColor.WHITE);
-				System.out.println("Bong! White: " + this.whiteScore
-						+ "\tBlack: " + this.blackScore);
+				//System.out.println("Bong! White: " + this.whiteScore
+				//		+ "\tBlack: " + this.blackScore);
 				this.turn = Turn.nextTurn(this.turn);
 				notifyObserver();
 			}
