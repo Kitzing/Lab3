@@ -99,7 +99,7 @@ public class GoldModel implements GameModel {
 	 * Create a new model for the gold game.
 	 */
 	public GoldModel() {
-		this.updateSpeed = 0;
+		this.updateSpeed = 150;
 		this.observer = new PropertyChangeSupport(this);
 		Dimension size = getGameboardSize();
 		gameboardState = new GameTile[this.gameboardSize.width][this.gameboardSize.height];
